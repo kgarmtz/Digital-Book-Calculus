@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ section.title }}
+{% endblock title %}
+
+{% block description %}
+<meta name="description" content="{{ section.seo_name }}">
+{% endblock description %}
+
+{% block mathjax %}
+<script>
+    MathJax = {
+        svg: { fontCache: 'global' },
+        loader: { load: ['[tex]/mathtools'] },
+        tex: { packages: { '[+]': ['mathtools'] } },
+    };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+{% endblock mathjax %}
+
+
+{% block content %}
+<!-- ========================= SIDEBAR START// ========================= -->
+<nav class="sidebar sidebar--{{color}} active" id="sidebar">
+    <div class="flow sidebar__container">
+        <div class="sidebar__box">
+            <img src="{% static 'images/logo.svg' %}" alt="Cálculo-aplicado" class="sidebar__logo">
+            <a class="sidebar__title" href="{% url 'home_app:index' %}">Unidad {{id}}</a>
+        </div>
+
+        {% for chapter in chapters %}
+        <div class="dropdown dropdown--{{color}}">
+            <button class="dropdown__button"> {{chapter.name}} </button>
+            <ul class="dropdown__list" role="list" id="list">
+                {% for section in chapter.sections.all %}
+                <li><a href="{{section.get_url}}">{{section.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <ul class="sidebar__list" role="list">
+        <li>
+            <img class="sidebar__icon" src="{% static 'images/icons/exercises-list.svg' %}" alt="Listas de ejercicios">
+            <a class="sidebar__link" id="modal-1" href="#" role="modal-button">Listas de Ejercicios</a>
+        </li>
+        <li>
+            <img class="sidebar__icon" src="{% static 'images/icons/activities.svg' %}" alt="Actividades">
+            <a class="sidebar__link" id="modal-2" href="#" role="modal-button">Actividades</a>
+        </li>
+        <li>
+            <img class="sidebar__icon" src="{% static 'images/icons/assessment.svg' %}" alt="Evaluación">
+            {% if exam %}
+            <a class="sidebar__link" href="{{exam.url}}" download>Evaluación</a>
+            {% else %}
+            <a class="sidebar__link" href="#">Evaluación</a>
+            {% endif %}
+        </li>
+        <li>
+            <img class="sidebar__icon" src="{% static 'images/icons/resources.svg' %}" alt="Recursos digitales">
+            <a class="sidebar__link" id="modal-3" href="#" role="modal-button">Recursos</a>
+        </li>
+    </ul>
+
+    <button class="sidebar__button sidebar__button-close" id="close-button">
+        <svg>
+            <use href="{% static 'images/icons/sprite.svg' %}#icon-close-sidebar" />
+        </svg>
+    </button>
+
+</nav>
+<!-- ========================= SIDEBAR END// ========================= -->
+
+<!-- MODAL START - EXERCISES LIST //-->
+<div class="modal" aria-labelledby="modal-1" role="modal">
+    <button class="modal__button" role="modal-close">
+        <svg>
+            <use href="{% static 'images/icons/sprite.svg' %}#icon-close-modal" />
+        </svg>
+    </button>
+    <div class="flow modal__content">
+        <h3 class="modal__title">
+            Listas de Ejercicios de la Unidad {{id}}
+        </h3>
+
+        <!-- Accordion start // -->
+        <div class="accordion accordion--modal flow">
+
+            {% for chapter in chapters %}
+            <div class="accordion__item">
+                <button class="accordion__button">
+                    <div class="accordion__box">
+                        <img class="accordion__icon" src="{% static 'images/modal-icons/exercises-modal.svg' %}"
+                            alt="Listas de ejercicios">
+                        <h2 class="accordion__title"> {{chapter.name}} </h2>
+                    </div>
+                    <span class="plus left-auto">&#43;</span>
+                    <span class="minus left-auto">&#8722;</span>
+                </button>
+                <div class="accordion__content">
+                    <ul class="accordion__list" role="list" id="list">
+                        {% for resource in chapter.resources.all %}
+
+                        {% if resource.file_type == "list" %}
+                        <li>
+                            <div class="accordion__box">
+                                <img class="accordion__icon" src="{% static 'images/modal-icons/pdf.svg' %}"
+                                    alt="Listas de ejercicios">
+                                <a class="accordion__link" href="{{resource.file.url}}" download>
+                                    {{ resource.name }} </a>
+                            </div>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Accordion end // -->
+
+    </div>
+</div>
+<!-- MODAL END //-->
+
+<!-- MODAL START - ACTIVITIES //-->
+<div class="modal" aria-labelledby="modal-2" role="modal">
+    <button class="modal__button" role="modal-close">
+        <svg>
+            <use href="{% static 'images/icons/sprite.svg' %}#icon-close-modal" />
+        </svg>
+    </button>
+    <div class="flow modal__content">
+        <h3 class="modal__title">
+            Actividades de la Unidad {{id}}
+        </h3>
+
+        <!-- Accordion start // -->
+        <div class="accordion accordion--modal flow">
+            {% for chapter in chapters %}
+            <div class="accordion__item">
+                <button class="accordion__button">
+                    <div class="accordion__box">
+                        <img class="accordion__icon" src="{% static 'images/modal-icons/activities-modal.svg' %}"
+                            alt="Listas de ejercicios">
+                        <h2 class="accordion__title"> {{chapter.name}} </h2>
+                    </div>
+                    <span class="plus left-auto">&#43;</span>
+                    <span class="minus left-auto">&#8722;</span>
+                </button>
+                <div class="accordion__content">
+                    <ul class="accordion__list" role="list" id="list">
+                        {% for resource in chapter.resources.all %}
+
+                        {% if resource.file_type == "activity" %}
+                        <li>
+                            <div class="accordion__box">
+                                <img class="accordion__icon" src="{% static 'images/modal-icons/pdf.svg' %}"
+                                    alt="Listas de ejercicios">
+                                <a class="accordion__link" href="{{resource.file.url}}" download>
+                                    {{ resource.name }} </a>
+                            </div>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <!-- Accordion end // -->
+
+    </div>
+</div>
+<!-- MODAL END //-->
+
+<!-- MODAL START - RESOURCES //-->
+<div class="modal" aria-labelledby="modal-3" role="modal">
+    <button class="modal__button" role="modal-close">
+        <svg>
+            <use href="{% static 'images/icons/sprite.svg' %}#icon-close-modal" />
+        </svg>
+    </button>
+    <div class="flow modal__content">
+        <h3 class="modal__title">
+            Recursos de la Unidad {{id}}
+        </h3>
+
+        <!-- Accordion start // -->
+        <div class="accordion accordion--modal flow">
+            {% for chapter in chapters %}
+            <div class="accordion__item">
+                <button class="accordion__button">
+                    <div class="accordion__box">
+                        <img class="accordion__icon" src="{% static 'images/modal-icons/slide-modal.svg' %}"
+                            alt="Diapositivas de la Unidad">
+                        <h2 class="accordion__title"> {{chapter.name}} </h2>
+                    </div>
+                    <span class="plus left-auto">&#43;</span>
+                    <span class="minus left-auto">&#8722;</span>
+                </button>
+                <div class="accordion__content">
+                    <ul class="accordion__list" role="list" id="list">
+                        {% for resource in chapter.resources.all %}
+
+                        {% if resource.file_type == "slide" %}
+                        <li>
+                            <div class="accordion__box">
+                                <img class="accordion__icon" src="{% static 'images/modal-icons/pdf.svg' %}"
+                                    alt="Listas de ejercicios">
+                                <a class="accordion__link" href="{{resource.file.url}}" download>
+                                    {{ resource.name }} </a>
+                            </div>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <!-- Accordion end // -->
+
+    </div>
+</div>
+<!-- MODAL END //-->
+
+<!-- ========================= NAVIGATION START// ========================= -->
+<nav class="navigation navigation--{{color}}">
+    <ul class="navigation__list" role="list">
+        <li class="navigation__item">
+            <div class="navigation__logo-box">
+                <img src="{% static 'images/logo.svg' %}" alt="Cálculo-aplicado" class="navigation__logo">
+                <a class="navigation__link" href="{% url 'home_app:index' %}">Cálculo Aplicado</a>
+            </div>
+        </li>
+
+        <li class="navigation__item">
+            <div class="navigation__button">
+                <span class="navigation__icon">&nbsp;</span>
+            </div>
+        </li>
+    </ul>
+</nav>
+<!-- ========================= NAVIGATION END// ========================= -->
+
+<!-- ========================= NAVIGATION-MOBILE START// ========================= -->
+<nav class="navigation-mobile navigation-mobile--{{color}}">
+    <!-- Accordion-mobile start // -->
+    <div class="accordion accordion--{{color}}">
+
+        {% for chapter in chapters %}
+        <div class="accordion__item">
+            <button class="accordion__button">
+                {{chapter.name}}
+                <span class="plus left-auto">&#43;</span>
+                <span class="minus left-auto">&#8722;</span>
+            </button>
+            <div class="accordion__content">
+                <ul class="accordion__list" role="list" id="list">
+                    {% for section in chapter.sections.all %}
+                    <li><a class="accordion__link" href="{{section.get_url}}">{{section.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+
+
+        <div class="accordion__item">
+            <button class="accordion__button">
+                Recursos Unidad {{id}}
+                <span class="plus left-auto">&#43;</span>
+                <span class="minus left-auto">&#8722;</span>
+            </button>
+
+            <div class="accordion__content">
+                <ul class="accordion__list" role="list" id="list">
+                    <li>
+                        <img class="accordion__icon" src="{% static 'images/icons/exercises-list.svg' %}"
+                            alt="Listas de ejercicios">
+                        <a class="accordion__link" href="#" id="modal-1" role="modal-button"> Listas de Ejercicios
+                        </a>
+                    </li>
+                    <li>
+                        <img class="accordion__icon" src="{% static 'images/icons/activities.svg' %}" alt="Actividades">
+                        <a class="accordion__link" href="#" id="modal-2" role="modal-button"> Actividades </a>
+                    </li>
+                    <li>
+                        <img class="accordion__icon" src="{% static 'images/icons/assessment.svg' %}" alt="Evaluación">
+                        {% if exam %}
+                        <a class="accordion__link" href="{{exam.url}}" download>Evaluación</a>
+                        {% else %}
+                        <a class="accordion__link" href="#">Evaluación</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <img class="accordion__icon" src="{% static 'images/icons/resources.svg' %}"
+                            alt="Recursos digitales">
+                        <a class="accordion__link" href="#" id="modal-3" role="modal-button"> Recursos </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accordion-mobile end // -->
+</nav>
+<!-- ========================= NAVIGATION-MOBILE END// ========================= -->
+
+
+<!-- ========================= MAIN START// ========================= -->
+<main class="unit-container">
+    <button class="sidebar__button sidebar__button-open" id="open-button">
+        <svg>
+            <use href="{% static 'images/icons/sprite.svg' %}#icon-open-sidebar" />
+        </svg>
+    </button>
+    <!-- ========================= SECTION CONTENT START// ========================= -->
+    <section class="unit-section flow">
+        {{ section.content|safe }}
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+</main>
+<!-- ========================= MAIN END// ========================= -->
+
+{% endblock content %}
+
+
+{% block js %}
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock js %}
