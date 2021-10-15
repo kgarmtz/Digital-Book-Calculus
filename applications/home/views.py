@@ -6,7 +6,8 @@ from applications.book.models import Unit
 
 # Create your views here.
 def home(request):
-    book  = Book.objects.first()
+    # book  = Book.objects.first()
+    book  = Book.objects.get(pk=1)
     units = Unit.objects.all()
     unit_section = []
 
