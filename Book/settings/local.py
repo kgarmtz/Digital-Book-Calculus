@@ -3,7 +3,7 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['polilibro-env.eba-ad2fmztg.us-west-2.elasticbeanstalk.com']
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
