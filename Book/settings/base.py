@@ -34,7 +34,8 @@ LOCAL_APPS = (
 THIRD_PARTY_APPS = (
     'ckeditor',
     'ckeditor_uploader',
-    'admin_honeypot'
+    'admin_honeypot',
+    'storages'
 )
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS

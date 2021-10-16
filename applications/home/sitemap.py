@@ -17,8 +17,6 @@ class SectionSitemap(Sitemap):
 
     # Sorting the url by chronological creation order
     
-    
-
 class Sitemap(Sitemap):
     protocol = 'https'
 
