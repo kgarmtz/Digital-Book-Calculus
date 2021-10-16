@@ -5,6 +5,12 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['polilibro-env.eba-ad2fmztg.us-west-2.elasticbeanstalk.com', '*']
 
+# CORS_ALLOWED_ORIGINS = [
+#     'https://polilibrocalculo.com',
+#     'http://localhost:8080',
+#     'http://127.0.0.1:8000',
+# ] 
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -84,5 +90,6 @@ CKEDITOR_CONFIGS = {
         'allowedContent': True,
     }
 }
+
 
 
