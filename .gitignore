@@ -11,8 +11,7 @@ media
 *$py.class 
 
 # Environments 
-*env
-.env 
+./.env 
 .venv 
 env/ 
 venv/ 
