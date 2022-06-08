@@ -31,7 +31,6 @@ if 'RDS_DB_NAME' in os.environ:
 
 # Otherwise, use this configuration (local server)
 else:
-    
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
