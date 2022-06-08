@@ -3,7 +3,8 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['polilibro-env.eba-ad2fmztg.us-west-2.elasticbeanstalk.com', '*']
+# ALLOWED_HOSTS = ['polilibro-env.eba-ad2fmztg.us-west-2.elasticbeanstalk.com', '*']
+ALLOWED_HOSTS = ['book-app-env.eba-ipvdkpmb.us-west-2.elasticbeanstalk.com', '*']
 
 # CORS_ALLOWED_ORIGINS = [
 #     'https://polilibrocalculo.com',
