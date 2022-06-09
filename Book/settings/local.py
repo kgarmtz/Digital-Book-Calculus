@@ -64,7 +64,7 @@ STATICFILES_DIRS = [ BASE_DIR.child('static') ]
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# DEFAULT_FILE_STORAGE = 'Book.media_storages.MediaStorage'
+DEFAULT_FILE_STORAGE = 'Book.media_storages.MediaStorage'
 # All the images will be uploaded in this path when we 
 # register a new one in the Django Admin Panel
 MEDIA_URL = '/media/'
