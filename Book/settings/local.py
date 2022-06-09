@@ -74,7 +74,7 @@ DEFAULT_FILE_STORAGE = 'Book.media_storages.MediaStorage'
 # MEDIA_URL = '/media/' #Uncoment this on local server
 
 # Directory that will hold all the user-uploaded files
-MEDIA_ROOT = BASE_DIR.child('media')  
+# MEDIA_ROOT = BASE_DIR.child('media')  
 
 # Ckeditor settings
 CKEDITOR_UPLOAD_PATH = 'uploads/'
