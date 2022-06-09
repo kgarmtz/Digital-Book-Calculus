@@ -64,17 +64,13 @@ STATICFILES_DIRS = [ BASE_DIR.child('static') ]
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# MEDIA FILES CONFIGURATION
-PUBLIC_MEDIA_LOCATION = 'media'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
-
 DEFAULT_FILE_STORAGE = 'Book.media_storages.MediaStorage'
 # All the images will be uploaded in this path when we 
 # register a new one in the Django Admin Panel
-# MEDIA_URL = '/media/' #Uncoment this on local server
+MEDIA_URL = '/media/'
 
 # Directory that will hold all the user-uploaded files
-# MEDIA_ROOT = BASE_DIR.child('media')  
+MEDIA_ROOT = BASE_DIR.child('media')  
 
 # Ckeditor settings
 CKEDITOR_UPLOAD_PATH = 'uploads/'
